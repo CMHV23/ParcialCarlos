@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Horario</title>
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1, h2 {
+        color: #002f6c;
+        text-align: center;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table th, table td {
+        text-align: left;
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #002f6c;
+        color: #fff;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 14px;
+        color: #fff;
+        background-color: #002f6c;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #00509e;
+    }
+
+    .btn-danger {
+        background-color: #e63946;
+    }
+
+    .btn-danger:hover {
+        background-color: #d62828;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form label {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    form input, form textarea, form select {
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    form button {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #002f6c;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    form button:hover {
+        background-color: #00509e;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1 th:text="${#strings.isEmpty(horario.id) ? 'Crear Horario' : 'Editar Horario'}"></h1>
+        <form th:action="@{/horarios/guardar}" th:object="${horario}" method="post">
+            <!-- Si el objeto Horario ya tiene un ID, lo incluimos de manera oculta -->
+            <input type="hidden" th:if="${horario.id != null}" th:field="*{id}" th:value="${horario.id}" />
+            
+            <label for="ruta">Ruta</label>
+            <!-- Cambiamos el th:field a *{ruta.id} para enviar solo el ID de la ruta -->
+            <select id="ruta" name="ruta" th:field="*{ruta.id}" required>
+                <option value="" disabled selected>Seleccione una ruta</option>
+                <!-- Recorremos las rutas disponibles -->
+                <option th:each="ruta : ${rutas}" th:value="${ruta.id}" th:text="${ruta.nombre}"></option>
+            </select>
+
+            <label for="horaSalida">Hora de Salida</label>
+            <input type="time" id="horaSalida" name="horaSalida" th:field="*{horaSalida}" required>
+
+            <label for="horaLlegada">Hora de Llegada</label>
+            <input type="time" id="horaLlegada" name="horaLlegada" th:field="*{horaLlegada}" required>
+
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</body>
+</html>
+
+

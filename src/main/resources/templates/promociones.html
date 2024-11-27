@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            color: #002f6c;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #002f6c;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            color: #fff;
+            background-color: #002f6c;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #00509e;
+        }
+
+        .btn-danger {
+            background-color: #e63946;
+        }
+
+        .btn-danger:hover {
+            background-color: #d62828;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Promociones</h1>
+        <a href="/promociones/crear" class="btn">Crear Nueva Promoción</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="promocion : ${promociones}">
+                    <td th:text="${promocion.titulo}"></td>
+                    <td th:text="${promocion.descripcion}"></td>
+                    <td th:text="${promocion.fechaInicio}"></td>
+                    <td th:text="${promocion.fechaFin}"></td>
+                    <td>
+                        <a th:href="@{/promociones/editar/{id}(id=${promocion.id})}" class="btn">Editar</a>
+                        <a th:href="@{/promociones/eliminar/{id}(id=${promocion.id})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
